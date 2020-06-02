@@ -40,8 +40,6 @@ HTCondorCeConfig: |+
   JOB_ROUTER_ENTRIES @=jre
   [
     name = "OSG_COVID19_Jobs";
-    GridResource = "batch slurm osguserl@lonepeak1.chpc.utah.edu";
-    Requirements = (Owner == "osguserl");
     set_default_queue = "lonepeak-osg";
     Requirements = (TARGET.IsCOVID19 =?= true);
     # 90 GB
@@ -55,8 +53,6 @@ HTCondorCeConfig: |+
   ]
   [
     name = "OSG_Opportunistic_Jobs";
-    GridResource = "batch slurm osguserl@lonepeak1.chpc.utah.edu";
-    Requirements = (Owner == "osguserl");
     set_default_queue = "lonepeak-osg";
     Requirements = (TARGET.IsCOVID19 =!= true);
     # 16 GB
@@ -67,6 +63,9 @@ HTCondorCeConfig: |+
     set_default_xcount = 4;
   ]
   @jre
+
+  JOB_ROUTER_ROUTE_NAMES = OSG_COVID19_Jobs OSG_Opportunistic_Jobs
+
 # Options to allow override of the bosco directory from arbitrary git repos
 # Bosco override dirs are expected in the following location in the git repo:
 #   <RESOURCE NAME>/bosco_override/
